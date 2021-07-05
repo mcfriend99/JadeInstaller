@@ -29,7 +29,7 @@ namespace JadeInstaller
         "JadeInstaller.exe.config",
         "JadeInstaller.pdb",
       };
-      creator.InstallLocation = new DirectoryInfo("C:\\Users\\Richard\\Desktop\\TestInstall");
+      creator.InstallLocation = "%userprofile%\\Desktop\\TestInstall";
       creator.ExecutableName = "Test.exe";
 
       string result = creator.Generate();

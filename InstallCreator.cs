@@ -68,6 +68,11 @@ namespace JadeInstaller
     public bool EnableAddDesktopIcon { get; set; } = true;
 
     /// <summary>
+    /// Whether to create a quick launch icon for the installation or not.
+    /// </summary>
+    public bool EnableAddQuickLuanchIcon { get; set; } = true;
+
+    /// <summary>
     /// A list of commands to run before installation.
     /// </summary>
     public List<string> PreInstallCommands { get; set; } = new List<string>();
@@ -77,12 +82,12 @@ namespace JadeInstaller
     /// </summary>
     public List<string> PostInstallCommands { get; set; } = new List<string>();
 
-    public string License { get; set; } = "";
+    public string License { get; set; } = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fcharset0 Arial;}}{\*\generator Msftedit 5.41.15.1515;}\viewkind4\uc1\pard\f0\fs20 asdfasdf\par}";
 
     /// <summary>
     /// The path the installer should extract to.
     /// </summary>
-    public DirectoryInfo InstallLocation { get; set; }
+    public string InstallLocation { get; set; }
 
     /// <summary>
     /// The name of the executable that will be the main entry point
@@ -97,6 +102,8 @@ namespace JadeInstaller
     /// </summary>
     public string CompileError { get; set; }
 
+    private long MinStorage = 0;
+
     public string CreateInstallData()
     {
       string data = "";
@@ -108,7 +115,10 @@ namespace JadeInstaller
       {
         foreach(string file in Files)
         {
-          archive.CreateEntryFromFile(new FileInfo(file).FullName, file);
+          ZipArchiveEntry entry = archive.CreateEntryFromFile(new FileInfo(file).FullName, file);
+
+          // add to minimum storage required for installation.
+          MinStorage += new FileInfo(file).Length;
         }
 
         foreach(string dirName in Folders)
@@ -116,7 +126,10 @@ namespace JadeInstaller
           DirectoryInfo dir = new DirectoryInfo(dirName);
           foreach(FileInfo file in dir.EnumerateFiles())
           {
-            archive.CreateEntryFromFile(file.FullName, $"{dirName}/{file.FullName.Replace(dir.FullName, "").Trim('/', '\\')}");
+            ZipArchiveEntry entry = archive.CreateEntryFromFile(file.FullName, $"{dirName}/{file.FullName.Replace(dir.FullName, "").Trim('/', '\\')}");
+
+            // add to minimum storage required for installation.
+            MinStorage += file.Length;
           }
         }
       }
@@ -128,6 +141,19 @@ namespace JadeInstaller
       }
 
       return data;
+    }
+
+    public string ToFileSize(long byteCount)
+    {
+      string[] suf = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
+      if(byteCount > 0)
+      {
+        long bytes = Math.Abs(byteCount);
+        int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+        double num = Math.Round(bytes / Math.Pow(1024, place), 1);
+        return (Math.Sign(byteCount) * num).ToString() + " " + suf[place];
+      }
+      return "0 B";
     }
 
     public string Generate()
@@ -170,7 +196,7 @@ namespace JadeInstaller
       source = source.Replace("{{COPYRIGHT}}", Copyright);
       source = source.Replace("{{TRADEMARK}}", Trademark);
       source = source.Replace("{{SETUP_NAME}}", SetupName);
-      source = source.Replace("{{INSTALL_LOCATION}}", InstallLocation.FullName);
+      source = source.Replace("{{INSTALL_LOCATION}}", InstallLocation);
       source = source.Replace("{{EXECUTABLE_NAME}}", ExecutableName);
       source = source.Replace("{{LICENSE}}", License);
 
@@ -190,8 +216,13 @@ namespace JadeInstaller
 
       source = source.Replace("{{ADD_STARTMENU_ENTRY}}", EnableAddStartMenuEntry ? "true" : "false");
       source = source.Replace("{{ADD_DESKTOP_ICON}}", EnableAddDesktopIcon ? "true" : "false");
+      source = source.Replace("{{ADD_QUICK_LAUNCH_ICON}}", EnableAddQuickLuanchIcon ? "true" : "false");
 
       source = source.Replace("{{INSTALL_DATA}}", CreateInstallData());
+
+      source = source.Replace("{{STORAGE_REQUIRED}}", ToFileSize(MinStorage));
+
+      Console.WriteLine(source);
 
       //Console.WriteLine(source);
 
