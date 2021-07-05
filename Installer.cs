@@ -149,11 +149,17 @@ namespace JadeInstaller
     private Panel panel3;
     private Label label7;
     private Label label5;
-    private Label label8;
+    private Label shortcutHint;
     private Label label9;
     private CheckBox quickLaunchCheckBox;
     private CheckBox desktopCheckBox;
     private CheckBox startMenuCheckBox;
+    private Panel reviewPanel;
+    private Panel panel4;
+    private Label label8;
+    private Label reviewHint;
+    private Label label10;
+    private RichTextBox reviewBox;
 
     // designer generated
     private bool AppUnusedBoolean = false;
@@ -198,12 +204,18 @@ namespace JadeInstaller
       this.licenstAgreeCheck = new System.Windows.Forms.CheckBox();
       this.backBtn = new System.Windows.Forms.Button();
       this.bodyPanel = new System.Windows.Forms.Panel();
+      this.reviewPanel = new System.Windows.Forms.Panel();
+      this.reviewBox = new System.Windows.Forms.RichTextBox();
+      this.label10 = new System.Windows.Forms.Label();
+      this.panel4 = new System.Windows.Forms.Panel();
+      this.reviewHint = new System.Windows.Forms.Label();
+      this.label8 = new System.Windows.Forms.Label();
       this.shortcutsSelectPanel = new System.Windows.Forms.Panel();
       this.quickLaunchCheckBox = new System.Windows.Forms.CheckBox();
       this.desktopCheckBox = new System.Windows.Forms.CheckBox();
       this.startMenuCheckBox = new System.Windows.Forms.CheckBox();
       this.label9 = new System.Windows.Forms.Label();
-      this.label8 = new System.Windows.Forms.Label();
+      this.shortcutHint = new System.Windows.Forms.Label();
       this.panel3 = new System.Windows.Forms.Panel();
       this.label7 = new System.Windows.Forms.Label();
       this.label5 = new System.Windows.Forms.Label();
@@ -225,6 +237,8 @@ namespace JadeInstaller
       ((System.ComponentModel.ISupportInitialize)(this.welcomeImg)).BeginInit();
       this.navPanel.SuspendLayout();
       this.bodyPanel.SuspendLayout();
+      this.reviewPanel.SuspendLayout();
+      this.panel4.SuspendLayout();
       this.shortcutsSelectPanel.SuspendLayout();
       this.panel3.SuspendLayout();
       this.installPathPanel.SuspendLayout();
@@ -356,6 +370,7 @@ namespace JadeInstaller
       // 
       // bodyPanel
       // 
+      this.bodyPanel.Controls.Add(this.reviewPanel);
       this.bodyPanel.Controls.Add(this.shortcutsSelectPanel);
       this.bodyPanel.Controls.Add(this.installPathPanel);
       this.bodyPanel.Controls.Add(this.licensePanel);
@@ -366,13 +381,76 @@ namespace JadeInstaller
       this.bodyPanel.Size = new System.Drawing.Size(544, 342);
       this.bodyPanel.TabIndex = 2;
       // 
+      // reviewPanel
+      // 
+      this.reviewPanel.Controls.Add(this.reviewBox);
+      this.reviewPanel.Controls.Add(this.label10);
+      this.reviewPanel.Controls.Add(this.panel4);
+      this.reviewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.reviewPanel.Location = new System.Drawing.Point(0, 0);
+      this.reviewPanel.Name = "reviewPanel";
+      this.reviewPanel.Size = new System.Drawing.Size(544, 342);
+      this.reviewPanel.TabIndex = 6;
+      this.reviewPanel.Visible = false;
+      // 
+      // reviewBox
+      // 
+      this.reviewBox.BackColor = System.Drawing.Color.White;
+      this.reviewBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.reviewBox.Location = new System.Drawing.Point(32, 109);
+      this.reviewBox.Name = "reviewBox";
+      this.reviewBox.ReadOnly = true;
+      this.reviewBox.Size = new System.Drawing.Size(488, 199);
+      this.reviewBox.TabIndex = 2;
+      this.reviewBox.Text = "";
+      // 
+      // label10
+      // 
+      this.label10.AutoSize = true;
+      this.label10.Location = new System.Drawing.Point(32, 80);
+      this.label10.Name = "label10";
+      this.label10.Size = new System.Drawing.Size(488, 13);
+      this.label10.TabIndex = 1;
+      this.label10.Text = "Click install to continue with the installation, or click Back if you want ot rev" +
+    "iew or change any settings.";
+      // 
+      // panel4
+      // 
+      this.panel4.BackColor = System.Drawing.Color.WhiteSmoke;
+      this.panel4.Controls.Add(this.reviewHint);
+      this.panel4.Controls.Add(this.label8);
+      this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel4.Location = new System.Drawing.Point(0, 0);
+      this.panel4.Name = "panel4";
+      this.panel4.Size = new System.Drawing.Size(544, 65);
+      this.panel4.TabIndex = 0;
+      // 
+      // reviewHint
+      // 
+      this.reviewHint.AutoSize = true;
+      this.reviewHint.Location = new System.Drawing.Point(29, 36);
+      this.reviewHint.Name = "reviewHint";
+      this.reviewHint.Size = new System.Drawing.Size(312, 13);
+      this.reviewHint.TabIndex = 1;
+      this.reviewHint.Text = "We are now ready to install JadeInstaller 1.0.0 on your computer.";
+      // 
+      // label8
+      // 
+      this.label8.AutoSize = true;
+      this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label8.Location = new System.Drawing.Point(29, 16);
+      this.label8.Name = "label8";
+      this.label8.Size = new System.Drawing.Size(116, 16);
+      this.label8.TabIndex = 0;
+      this.label8.Text = "Ready to Install";
+      // 
       // shortcutsSelectPanel
       // 
       this.shortcutsSelectPanel.Controls.Add(this.quickLaunchCheckBox);
       this.shortcutsSelectPanel.Controls.Add(this.desktopCheckBox);
       this.shortcutsSelectPanel.Controls.Add(this.startMenuCheckBox);
       this.shortcutsSelectPanel.Controls.Add(this.label9);
-      this.shortcutsSelectPanel.Controls.Add(this.label8);
+      this.shortcutsSelectPanel.Controls.Add(this.shortcutHint);
       this.shortcutsSelectPanel.Controls.Add(this.panel3);
       this.shortcutsSelectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.shortcutsSelectPanel.Location = new System.Drawing.Point(0, 0);
@@ -423,13 +501,13 @@ namespace JadeInstaller
       this.label9.TabIndex = 2;
       this.label9.Text = "Icons and shortcuts:";
       // 
-      // label8
+      // shortcutHint
       // 
-      this.label8.Location = new System.Drawing.Point(37, 84);
-      this.label8.Name = "label8";
-      this.label8.Size = new System.Drawing.Size(467, 47);
-      this.label8.TabIndex = 1;
-      this.label8.Text = "Select the icons and shortcuts you will like to configure while we are installing" +
+      this.shortcutHint.Location = new System.Drawing.Point(37, 84);
+      this.shortcutHint.Name = "shortcutHint";
+      this.shortcutHint.Size = new System.Drawing.Size(467, 47);
+      this.shortcutHint.TabIndex = 1;
+      this.shortcutHint.Text = "Select the icons and shortcuts you will like to configure while we are installing" +
     " JadeInstaller 1.0.0.\nClick Next when you are ready to proceed.";
       // 
       // panel3
@@ -631,6 +709,10 @@ namespace JadeInstaller
       this.navPanel.ResumeLayout(false);
       this.navPanel.PerformLayout();
       this.bodyPanel.ResumeLayout(false);
+      this.reviewPanel.ResumeLayout(false);
+      this.reviewPanel.PerformLayout();
+      this.panel4.ResumeLayout(false);
+      this.panel4.PerformLayout();
       this.shortcutsSelectPanel.ResumeLayout(false);
       this.shortcutsSelectPanel.PerformLayout();
       this.panel3.ResumeLayout(false);
@@ -666,6 +748,8 @@ namespace JadeInstaller
       installLocationHint.Text = string.Format("{0} will be installed to the following location.", AppName);
       installLocationBox.Text = InstallLocation;
       installSpaceInfo.Text = string.Format("At least {0} of disk space is required for this installation.", StorageRequired);
+      shortcutHint.Text = string.Format("Select the icons and shortcuts you will like to configure while we are installing {0} {1}.\nClick Next when you are ready to proceed.", AppName, Version);
+      reviewHint.Text = string.Format("We are now ready to install {0} {1} on your computer.", AppName, Version);
 
       licenseBox.Rtf = License;
 
@@ -677,9 +761,29 @@ namespace JadeInstaller
       panels.Add(licensePanel);
       panels.Add(installPathPanel);
       panels.Add(shortcutsSelectPanel);
+      panels.Add(reviewPanel);
     }
 
     List<Panel> panels = new List<Panel>();
+
+    void Review()
+    {
+      reviewBox.Text = @"
+Destination location:
+      " + InstallLocation;
+
+      reviewBox.Text += AddToStartMenu ? @"
+
+Start Menu folder:
+      " + AppName : "";
+
+      reviewBox.Text += AddToDesktop || AddToQuickLaunch ? @"
+
+Shortcut and Icons:" : "";
+
+      reviewBox.Text += AddToDesktop ? "\n         Create a desktop icon" : "";
+      reviewBox.Text += AddToQuickLaunch ? "\n         Create a Quick Launch icon" : "";
+    }
 
     int currentPage = 0;
     void Next()
@@ -792,11 +896,13 @@ namespace JadeInstaller
 
     private void nextBtn_Click(object sender, EventArgs e)
     {
+      Review();
       Next();
     }
 
     private void backBtn_Click(object sender, EventArgs e)
     {
+      Review();
       Previous();
     }
 
